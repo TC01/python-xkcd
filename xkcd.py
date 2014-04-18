@@ -112,4 +112,4 @@ def getComic(number):
 	if number > numComics or number <= 0:
 		print "Error: You have requested an invalid comic."
 		return Comic(-1)
-	return ComiC(number)
+	return Comic(number)
