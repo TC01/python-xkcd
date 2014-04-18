@@ -1,0 +1,5 @@
+Version 2.1:
+
+-Fixed bugs with Comic.download() function
+-Added optional parameter to Comic.download() to change name of output file
+-Added more information to long_description text
