@@ -17,6 +17,8 @@ import random
 import urllib2 as urllib
 import webbrowser
 
+explanationUrl = "http://explainxkcd.com/"
+
 class Comic:
 	
 	def __init__(self, number):
@@ -60,6 +62,11 @@ class Comic:
 	def getImageName(self):
 		"""Returns the name of the comic's image"""
 		return self.imageName
+
+	def getExplanation(self):
+		"""Returns an explain xkcd link for the comic."""
+		global explanationUrl
+		return explanationUrl + str(self.number)
 	
 	def show(self):
 		"""Uses the webbrowser module to open the comic"""
