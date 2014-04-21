@@ -14,9 +14,17 @@ from it using various provided methods."""
 import json
 import os
 import random
-import urllib2 as urllib
+import sys
 import webbrowser
 
+# Python 3 support!
+if sys.version_info[0] <= 2:
+	import urllib2 as urllib
+else:
+	# This is kind of broken but I'm not sure of a better way.
+	import urllib.request as urllib
+
+# Define the URLs as globals.
 explanationUrl = "http://explainxkcd.com/"
 
 class Comic:
@@ -31,11 +39,18 @@ class Comic:
 		#Get data from the JSON interface
 		jsonString = self.link + "/info.0.json"
 		xkcd = urllib.urlopen(jsonString).read()
-		xkcdData = json.loads(xkcd)
+		xkcdData = json.loads(xkcd.decode())
 		self.title = xkcdData['safe_title'].encode('ascii')
 		self.altText = xkcdData['alt'].encode('ascii')
 		self.imageLink = xkcdData['img'].encode('ascii')
 		
+		# If this is Python 3, these are binary strings because we encoded them into ASCII
+		# ...so that urllib would be happy.
+		if sys.version_info[0] >= 3:
+			self.title = str(self.title, encoding='UTF-8')
+			self.altText = str(self.altText, encoding='UTF-8')
+			self.imageLink = str(self.imageLink, encoding='UTF-8')
+
 		#Get the image filename
 		offset = len('http://imgs.xkcd.com/comics/')
 		index = self.imageLink.find('http://imgs.xkcd.com/comics/')
@@ -88,7 +103,7 @@ class Comic:
 		try:
 			download = open(output, 'wb')
 		except:
-			print "Unable to make file " + output
+			print("Unable to make file " + output)
 			return ""
 		download.write(image)
 		download.close()
@@ -97,7 +112,7 @@ class Comic:
 def getLatestComicNum():
 	"""Function to return the number of the latest comic."""
 	xkcd = urllib.urlopen("http://xkcd.com/info.0.json").read()
-	xkcdJSON = json.loads(xkcd)
+	xkcdJSON = json.loads(xkcd.decode())
 	number = xkcdJSON['num']
 	return number
 	
@@ -117,6 +132,6 @@ def getComic(number):
 	"""Function to return a Comic object for a given comic number"""
 	numComics = getLatestComicNum()
 	if number > numComics or number <= 0:
-		print "Error: You have requested an invalid comic."
+		print("Error: You have requested an invalid comic.")
 		return Comic(-1)
 	return Comic(number)
