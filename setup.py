@@ -13,7 +13,7 @@ this. Once you have a Comic object, you can access data from it using various
 provided methods."""
 
 setup(name='xkcd',
-	version='2.1',
+	version='2.2',
 	description='Library to access xkcd.com',
 	long_description=long_description,
 	author='Ben Rosser',

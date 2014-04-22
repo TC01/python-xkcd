@@ -6,7 +6,7 @@ an entirely independent project.
 
 It makes use of the JSON interface to Randall's site to retrieve comic data.
 
-One can create comic objects manually using Comic(number), or can use the 
+One can create comic objects manually using Comic(number), or can use the
 helper functions provided- getLatestComic(), getRandomComic(), and
 getComic()- to do this. Once you have a Comic object, you can access data
 from it using various provided methods."""
@@ -25,16 +25,19 @@ else:
 	import urllib.request as urllib
 
 # Define the URLs as globals.
-explanationUrl = "http://explainxkcd.com/"
+xkcdUrl = "http://www.xkcd.com/"			# The URL for xkcd.
+imageUrl = "http://imgs.xkcd.com/comics/"	# The root URL for image retrieval.
+explanationUrl = "http://explainxkcd.com/"	# The URL of the explanation.
 
 class Comic:
 	
 	def __init__(self, number):
+		global xkcdUrl, imageUrl
 		self.number = number
 		if number <= 0:
 			self.link = "Invalid comic"
 			return
-		self.link = "http://www.xkcd.com/" + str(number)
+		self.link = xkcdUrl + str(number)
 		
 		#Get data from the JSON interface
 		jsonString = self.link + "/info.0.json"
@@ -52,8 +55,8 @@ class Comic:
 			self.imageLink = str(self.imageLink, encoding='UTF-8')
 
 		#Get the image filename
-		offset = len('http://imgs.xkcd.com/comics/')
-		index = self.imageLink.find('http://imgs.xkcd.com/comics/')
+		offset = len(imageUrl)
+		index = self.imageLink.find(imageUrl)
 		self.imageName = self.imageLink[index + offset:]
 		
 	def __str__(self):

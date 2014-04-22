@@ -1,3 +1,9 @@
+Version 2.2:
+
+-Fixed very silly bug with xkcd.getComic()
+-Added a getExplanation() which returns an explainxkcd link for a Comic().
+-Added support for Python 3!
+
 Version 2.1:
 
 -Fixed bugs with Comic.download() function
