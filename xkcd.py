@@ -43,16 +43,15 @@ class Comic:
 		jsonString = self.link + "/info.0.json"
 		xkcd = urllib.urlopen(jsonString).read()
 		xkcdData = json.loads(xkcd.decode())
-		self.title = xkcdData['safe_title'].encode('ascii')
-		self.altText = xkcdData['alt'].encode('ascii')
-		self.imageLink = xkcdData['img'].encode('ascii')
+		self.title = xkcdData['safe_title']
+		self.altText = xkcdData['alt']
+		self.imageLink = xkcdData['img']
 		
-		# If this is Python 3, these are binary strings because we encoded them into ASCII
-		# ...so that urllib would be happy.
-		if sys.version_info[0] >= 3:
-			self.title = str(self.title, encoding='UTF-8')
-			self.altText = str(self.altText, encoding='UTF-8')
-			self.imageLink = str(self.imageLink, encoding='UTF-8')
+		# This may no longer be necessary.
+#		if sys.version_info[0] >= 3:
+#			self.title = str(self.title, encoding='UTF-8')
+#			self.altText = str(self.altText, encoding='UTF-8')
+#			self.imageLink = str(self.imageLink, encoding='UTF-8')
 
 		#Get the image filename
 		offset = len(imageUrl)
@@ -68,11 +67,35 @@ class Comic:
 	def getTitle(self):
 		"""Returns the title of the comic"""
 		return self.title
+
+	def getAsciiTitle(self):
+		"""Returns the ASCII version of a title, with appropriate try/except."""
+		try:
+			asciiTitle = self.title.encode('ascii')
+		except:
+			return ""
+		return asciiTitle
+
+	def getAsciiAltText(self):
+		"""Returns the ASCII version of alt text, with appropriate try/except."""
+		try:
+			asciiAltText = self.altText.encode('ascii')
+		except:
+			return ""
+		return asciiAltText
+
+	def getAsciiImageLink(self):
+		"""Returns the ASCII version of image link, with appropriate try/except."""
+		try:
+			asciiImageLink = self.imageLink.encode('ascii')
+		except:
+			return ""
+		return asciiImageLink
 	
 	def getAltText(self):
 		"""Returns the alt text of the comic"""
 		return self.altText
-		
+
 	def getImageLink(self):
 		"""Returns a URL link to the comic's image"""
 		return self.imageLink
