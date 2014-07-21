@@ -1,4 +1,6 @@
 xkcd v2.2 - A Python interface to xkcd.com
+------------------------------------------
+
 By Ben Rosser
 Released under MIT License (see LICENSE.txt)
 
@@ -15,11 +17,13 @@ provided methods.
 -------------------------------------------------------------------------------
 
 Documentation:
+--------------
 
 I will eventually get around to generating some proper HTML docs for the module,
 but in the mean time here's the output of "pydoc xkcd":
 
--------------------------------------------------------------------------------
+(NOTE: This is old, and may not be up to date!)
+(It'll get replaced shortly).
 
 Help on module xkcd:
 
