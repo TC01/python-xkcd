@@ -14,7 +14,7 @@ functions provided- getLatestComic(), getRandomComic(), and getComic()- to do
 this. Once you have a Comic object, you can access data from it using various
 provided methods.
 
-Documentation is available [here]().
+Documentation is available [here](https://pythonhosted.org/xkcd/).
 
 ## Changelog:
 
