@@ -70,26 +70,17 @@ class Comic:
 
 	def getAsciiTitle(self):
 		"""Returns the ASCII version of a title, with appropriate try/except."""
-		try:
-			asciiTitle = self.title.encode('ascii')
-		except:
-			return ""
+		asciiTitle = convertToAscii(self.title)
 		return asciiTitle
 
 	def getAsciiAltText(self):
 		"""Returns the ASCII version of alt text, with appropriate try/except."""
-		try:
-			asciiAltText = self.altText.encode('ascii')
-		except:
-			return ""
+		asciiAltText = convertToAscii(self.altText)
 		return asciiAltText
 
 	def getAsciiImageLink(self):
 		"""Returns the ASCII version of image link, with appropriate try/except."""
-		try:
-			asciiImageLink = self.imageLink.encode('ascii')
-		except:
-			return ""
+		asciiImageLink = convertToAscii(self.imageLink)
 		return asciiImageLink
 	
 	def getAltText(self):
@@ -161,3 +152,18 @@ def getComic(number):
 		print("Error: You have requested an invalid comic.")
 		return Comic(-1)
 	return Comic(number)
+
+def convertToAscii(string, error="?"):
+	"""Utility function that converts unicode 'string' to ASCII, replacing all unparseable characters with 'error'."""
+	running = True
+	asciiString = string
+	while running:
+		try:
+			asciiString = asciiString.encode('ascii')
+		except UnicodeError as unicode:
+			start = unicode.start
+			end = unicode.end
+			asciiString = asciiString[:start] + "?" + asciiString[end:]
+		else:
+			running = False		
+	return asciiString
