@@ -1,4 +1,4 @@
-"""Python library for accessing xkcd.com
+"""Python library for accessing xkcd.com.
 
 This is a Python library for accessing and retrieving links to comics from
 the xkcd webcomic by Randall Munroe. It is NOT endorsed or made by him, it's
@@ -9,7 +9,9 @@ It makes use of the JSON interface to Randall's site to retrieve comic data.
 One can create comic objects manually using Comic(number), or can use the
 helper functions provided- getLatestComic(), getRandomComic(), and
 getComic()- to do this. Once you have a Comic object, you can access data
-from it using various provided methods."""
+from it using various provided methods.
+
+This documentation is not that great, but it should be getting better Soon."""
 
 import json
 import os
