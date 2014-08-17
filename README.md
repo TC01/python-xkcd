@@ -16,11 +16,14 @@ provided methods.
 
 Documentation is available [here](https://pythonhosted.org/xkcd/).
 
+Note that PyPI currently doesn't support Markdown formatting for long_description,
+hence the ugly rendering here.
+
 ## Changelog:
 
 ### Version 2.3:
-* Fixed ASCII bug in Python 2.x.
-* Created Sphinx documentation and uploaded it to pythonhosted.org.
+* Fixed ASCII bug in Python 2.x
+* Created Sphinx documentation and uploaded it to pythonhosted.org
 
 ### Version 2.2:
 * Fixed very silly bug with xkcd.getComic()
