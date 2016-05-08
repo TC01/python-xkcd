@@ -1,7 +1,6 @@
 # xkcd v2.3.2 - A Python interface to xkcd.com
 
-By Ben Rosser
-Released under MIT License (see LICENSE.txt)
+By Ben Rosser, released under MIT License (see LICENSE.txt)
 
 This is a Python library for accessing and retrieving links to comics from the
 xkcd webcomic by Randall Munroe. It is NOT endorsed or made by him, it's an
@@ -14,9 +13,6 @@ this. Once you have a Comic object, you can access data from it using various
 provided methods.
 
 Documentation is available [here](https://pythonhosted.org/xkcd/).
-
-Note that PyPI currently doesn't support Markdown formatting for long_description,
-hence the ugly rendering here.
 
 ## Changelog:
 
