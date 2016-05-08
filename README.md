@@ -1,5 +1,4 @@
-xkcd v2.2 - A Python interface to xkcd.com
-------------------------------------------
+# xkcd v2.3.2 - A Python interface to xkcd.com
 
 By Ben Rosser
 Released under MIT License (see LICENSE.txt)
@@ -20,6 +19,10 @@ Note that PyPI currently doesn't support Markdown formatting for long_descriptio
 hence the ugly rendering here.
 
 ## Changelog:
+
+### Version 2.3.2:
+* Fixed distutils URL to point at TC01/python-xkcd, not TC01/xkcd.
+* Started using pypandoc to dynamically turn README.md into a RST long-description.
 
 ### Version 2.3:
 * Fixed ASCII bug in Python 2.x
