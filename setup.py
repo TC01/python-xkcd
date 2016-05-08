@@ -22,7 +22,7 @@ setup(
 	long_description=long_description,
 
 	# The project's main homepage.
-	url='https://github.com/TC01/xkcd',
+	url='https://github.com/TC01/python-xkcd',
 
 	# Author details
 	author = "Ben Rosser",
