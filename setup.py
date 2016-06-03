@@ -1,12 +1,8 @@
 # Based from http://pythonhosted.org/setuptools/setuptools.html#automatic-script-creation
 
-from setuptools import setup, find_packages  # Always prefer setuptools over distutils
+from setuptools import setup  # Always prefer setuptools over distutils
 from codecs import open  # To use a consistent encoding
 from os import path
-
-# Depend on pypandoc for turning markdown readme into RST because
-# PyPI doesn't yet support this.
-import pypandoc
 
 here = path.abspath(path.dirname(__file__))
 
@@ -14,7 +10,8 @@ here = path.abspath(path.dirname(__file__))
 #with open(path.join(here, 'README.md'), encoding='utf-8') as f:
 #	long_description = f.read()
 
-long_description = pypandoc.convert("README.md", "rst")
+with open("README.rst", "r", "utf-8") as f:
+	long_description = f.read()
 
 setup(
 	name='xkcd',
