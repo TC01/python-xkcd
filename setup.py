@@ -4,17 +4,21 @@ from setuptools import setup, find_packages  # Always prefer setuptools over dis
 from codecs import open  # To use a consistent encoding
 from os import path
 
-# Depend on pypandoc for turning markdown readme into RST because
-# PyPI doesn't yet support this.
-import pypandoc
+# We shouldn't need pypandoc on remote users's systems just because I dislike rST.
+try:
+	# Depend on pypandoc for turning markdown readme into RST because
+	# PyPI doesn't yet support this.
+	import pypandoc
 
-here = path.abspath(path.dirname(__file__))
+	here = path.abspath(path.dirname(__file__))
+	long_description = pypandoc.convert("README.md", "rst")
 
-# Get the long description from the relevant file
-#with open(path.join(here, 'README.md'), encoding='utf-8') as f:
-#	long_description = f.read()
+except ImportError:
+	here = path.abspath(path.dirname(__file__))
 
-long_description = pypandoc.convert("README.md", "rst")
+	# Get the long description from the relevant file
+	with open(path.join(here, 'README.md'), encoding='utf-8') as f:
+		long_description = f.read()
 
 setup(
 	name='xkcd',
