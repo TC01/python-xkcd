@@ -91,7 +91,6 @@ class WhatIfArchiveParser(HTMLParser.HTMLParser):
 					for pair in attrs:
 						if pair[0] == "href":
 							link = pair[1]
-					print link
 					# If we fail to find a link for whatever reason or if the parsing fails,
 					# fail to generate a comic.
 					try:
@@ -99,15 +98,12 @@ class WhatIfArchiveParser(HTMLParser.HTMLParser):
 						num = int(num)
 					except:
 						num = -1
-					print num
 					self.currentWhatIf.number = num
 					self.currentWhatIf.link = "http:" + link
 
 	def handle_data(self, data):
 		# Some cruder parsing to pick out the data.
 		if self.parsingWhatIf:
-			if self.seenATag == 1:
-				print(data)
 			if self.seenATag == 2:
 				self.currentWhatIf.title = data
 
