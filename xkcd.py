@@ -295,7 +295,7 @@ def getRandomWhatIf():
 	archive = getWhatIfArchive()
 	latest = getLatestWhatIfNum(archive)
 	number = random.randint(1, latest)
-	return WhatIf(number)
+	return archive[number]
 
 def getWhatIf(number):
 	"""	Function that returns a specified What If object. Returns
