@@ -53,6 +53,14 @@ class WhatIf:
 		"""Returns the title of the What If."""
 		return self.title
 
+	def getNumber(self):
+		"""Returns the number of the What If."""
+		return self.number
+
+	def getLink(self):
+		"""Returns a link to the What If."""
+		return self.link
+
 # Possibly, BeautifulSoup or MechanicalSoup or something would be nicer
 # But xkcd currently has no external dependencies and I'd like to keep it that way.
 class WhatIfArchiveParser(HTMLParser.HTMLParser):
@@ -255,6 +263,8 @@ def getWhatIfArchive():
 		indexed into by their number."""
 	archive = urllib.urlopen(archiveUrl)
 	text = archive.read()
+	if sys.version_info[0] >= 3:
+		text = text.decode('utf-8')
 	archive.close()
 
 	parser = WhatIfArchiveParser()
