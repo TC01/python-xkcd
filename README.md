@@ -16,6 +16,10 @@ Documentation is available [here](https://pythonhosted.org/xkcd/).
 
 ## Changelog:
 
+### Version 2.3.3:
+* Made pypandoc conversion optional; long_description will be MD formatted if it
+cannot be imported (and rST-formatted if it can).
+
 ### Version 2.3.2:
 * Fixed distutils URL to point at TC01/python-xkcd, not TC01/xkcd.
 * Started using pypandoc to dynamically turn README.md into a RST long-description.
