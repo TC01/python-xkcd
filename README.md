@@ -1,4 +1,4 @@
-# xkcd v2.3.2 - A Python interface to xkcd.com
+# xkcd v2.3.3 - A Python interface to xkcd.com
 
 By Ben Rosser, released under MIT License (see LICENSE.txt)
 
