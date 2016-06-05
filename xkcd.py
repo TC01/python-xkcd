@@ -33,6 +33,7 @@ else:
 xkcdUrl = "http://www.xkcd.com/"			# The URL for xkcd.
 imageUrl = "http://imgs.xkcd.com/comics/"	# The root URL for image retrieval.
 explanationUrl = "http://explainxkcd.com/"	# The URL of the explanation.
+archiveUrl = "https://what-if.xkcd.com/archive/"	# The What If Archive URL.
 
 class WhatIf:
 
@@ -47,6 +48,10 @@ class WhatIf:
 
 	def __repr__(self):
 		return self.__str__()
+
+	def getTitle(self):
+		"""Returns the title of the What If."""
+		return self.title
 
 # Possibly, BeautifulSoup or MechanicalSoup or something would be nicer
 # But xkcd currently has no external dependencies and I'd like to keep it that way.
@@ -248,6 +253,52 @@ def getComic(number):
 	return Comic(number)
 
 # Functions that work on What Ifs.
+
+def getWhatIfArchive():
+	"""	Function to return a dictionary of all published What If objects,
+		indexed into by their number."""
+	archive = urllib.urlopen(archiveUrl)
+	text = archive.read()
+	archive.close()
+
+	parser = WhatIfArchiveParser()
+	parser.feed(text)
+	return parser.getWhatIfs()
+
+def getLatestWhatIfNum(archive=None):
+	"""	Returns the number of the latest What If. Takes optional "archive" argument, if this is not
+		None (default value) it will be used as the dictionary what if archive."""
+	latestWhatIf = getLatestWhatIf(archive)
+	return latestWhatIf.number
+
+def getLatestWhatIf(archive=None):
+	"""	Function to return a What If object for the latest What If. Takes optional "archive" argument,
+		this is not None(default value) it will be used as the dictionary what if archive."""
+	if archive is None:
+		archive = getWhatIfArchive()
+
+	# Get the archive keys as a list and sort them by ascending order.
+	# The last entry in keys will be the latest What if.
+	keys = list(archive.keys())
+	keys.sort()
+	return archive[keys[-1]]
+
+def getRandomWhatIf():
+	"""	Function that returns a random What If object."""
+	random.seed()
+	archive = getWhatIfArchive()
+	latest = getLatestWhatIfNum(archive)
+	number = random.randint(1, latest)
+	return WhatIf(number)
+
+def getWhatIf(number):
+	"""	Function that returns a specified What If object. Returns
+		None if the specified What If is out of range."""
+	archive = getWhatIfArchive()
+	latest = getLatestWhatIfNum(archive)
+	if number > latest or latest <= 0:
+		return None
+	return archive[number]
 
 # Utility functions
 
