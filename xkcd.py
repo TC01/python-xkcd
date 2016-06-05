@@ -13,6 +13,7 @@ from it using various provided methods.
 
 This documentation is not that great, but it should be getting better Soon."""
 
+import copy
 import json
 import os
 import random
@@ -22,14 +23,103 @@ import webbrowser
 # Python 3 support!
 if sys.version_info[0] <= 2:
 	import urllib2 as urllib
+	import HTMLParser
 else:
 	# This is kind of broken but I'm not sure of a better way.
 	import urllib.request as urllib
+	import html.parser as HTMLParser
 
 # Define the URLs as globals.
 xkcdUrl = "http://www.xkcd.com/"			# The URL for xkcd.
 imageUrl = "http://imgs.xkcd.com/comics/"	# The root URL for image retrieval.
 explanationUrl = "http://explainxkcd.com/"	# The URL of the explanation.
+
+class WhatIf:
+
+	def __init__(self):
+		self.number = -1
+		self.imageLink = ''
+		self.title = ''
+		self.link = ''
+
+	def __str__(self):
+		return "What If object for " + self.link
+
+	def __repr__(self):
+		return self.__str__()
+
+# Possibly, BeautifulSoup or MechanicalSoup or something would be nicer
+# But xkcd currently has no external dependencies and I'd like to keep it that way.
+class WhatIfArchiveParser(HTMLParser.HTMLParser):
+
+	def __init__(self):
+		# Ugh, this is an "old style class"
+		if sys.version_info[0] <= 2:
+			HTMLParser.HTMLParser.__init__(self)
+		else:
+			super().__init__()
+
+		# Create a dictionary of what-ifs, indexed by number.
+		self.whatifs = {}
+		self.currentWhatIf = None
+
+		# Parsing metadata
+		self.parsingWhatIf = False
+		self.seenATag = 0
+
+	def handle_starttag(self, tag, attrs):
+		# Check if this is an archive entry.
+		if tag == "div" and ("class", "archive-entry") in attrs:
+			self.parsingWhatIf = True
+			self.currentWhatIf = WhatIf()
+
+		# If we're parsing an archive entry:
+		if self.parsingWhatIf:
+			if tag == "a":
+				# <a> tags occur twice in an archive entry, this value influences the result of
+				# the data parsed; is it an image or is it the title?
+				self.seenATag += 1
+
+				# Only do this once.
+				if self.currentWhatIf.number == -1:
+					link = ""
+					for pair in attrs:
+						if pair[0] == "href":
+							link = pair[1]
+					print link
+					# If we fail to find a link for whatever reason or if the parsing fails,
+					# fail to generate a comic.
+					try:
+						num = link[len("//what-if.xkcd.com/"):-1]
+						num = int(num)
+					except:
+						num = -1
+					print num
+					self.currentWhatIf.number = num
+					self.currentWhatIf.link = "http:" + link
+
+	def handle_data(self, data):
+		# Some cruder parsing to pick out the data.
+		if self.parsingWhatIf:
+			if self.seenATag == 1:
+				print(data)
+			if self.seenATag == 2:
+				self.currentWhatIf.title = data
+
+	def handle_endtag(self, tag):
+		# When we encounter the final </div>, stop parsing these.
+		if tag == "div" and self.parsingWhatIf:
+			self.parsingWhatIf = False
+			if self.currentWhatIf.number != -1:
+				self.whatifs[self.currentWhatIf.number] = copy.copy(self.currentWhatIf)
+
+		# When we encounter the final </a>, reset seen counter to make handle_data
+		# not do anything.
+		if self.parsingWhatIf and tag == "a" and self.seenATag == 2:
+			self.seenATag = 0
+
+	def getWhatIfs(self):
+		return self.whatifs
 
 class Comic:
 
@@ -128,6 +218,8 @@ class Comic:
 		download.close()
 		return output
 
+# Functions that work on Comics.
+
 def getLatestComicNum():
 	"""Function to return the number of the latest comic."""
 	xkcd = urllib.urlopen("http://xkcd.com/info.0.json").read()
@@ -155,8 +247,13 @@ def getComic(number):
 		return Comic(-1)
 	return Comic(number)
 
+# Functions that work on What Ifs.
+
+# Utility functions
+
 def convertToAscii(string, error="?"):
-	"""Utility function that converts unicode 'string' to ASCII, replacing all unparseable characters with 'error'."""
+	"""Utility function that converts unicode 'string' to ASCII, replacing all unparseable characters with 'error'.
+		This exists for compatibilty with e.g. python2 and twisted."""
 	running = True
 	asciiString = string
 	while running:
