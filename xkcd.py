@@ -32,7 +32,7 @@ imageUrl = "http://imgs.xkcd.com/comics/"	# The root URL for image retrieval.
 explanationUrl = "http://explainxkcd.com/"	# The URL of the explanation.
 
 class Comic:
-	
+
 	def __init__(self, number):
 		global xkcdUrl, imageUrl
 		self.number = number
@@ -40,7 +40,7 @@ class Comic:
 			self.link = "Invalid comic"
 			return
 		self.link = xkcdUrl + str(number)
-		
+
 		#Get data from the JSON interface
 		jsonString = self.link + "/info.0.json"
 		xkcd = urllib.urlopen(jsonString).read()
@@ -48,7 +48,7 @@ class Comic:
 		self.title = xkcdData['safe_title']
 		self.altText = xkcdData['alt']
 		self.imageLink = xkcdData['img']
-		
+
 		# This may no longer be necessary.
 #		if sys.version_info[0] >= 3:
 #			self.title = str(self.title, encoding='UTF-8')
@@ -59,13 +59,13 @@ class Comic:
 		offset = len(imageUrl)
 		index = self.imageLink.find(imageUrl)
 		self.imageName = self.imageLink[index + offset:]
-		
+
 	def __str__(self):
 		return "Comic object for " + self.link
-		
+
 	def __repr__(self):
 		return "Comic object for " + self.link
-	
+
 	def getTitle(self):
 		"""Returns the title of the comic"""
 		return self.title
@@ -84,7 +84,7 @@ class Comic:
 		"""Returns the ASCII version of image link, with appropriate try/except."""
 		asciiImageLink = convertToAscii(self.imageLink)
 		return asciiImageLink
-	
+
 	def getAltText(self):
 		"""Returns the alt text of the comic"""
 		return self.altText
@@ -92,7 +92,7 @@ class Comic:
 	def getImageLink(self):
 		"""Returns a URL link to the comic's image"""
 		return self.imageLink
-		
+
 	def getImageName(self):
 		"""Returns the name of the comic's image"""
 		return self.imageName
@@ -101,7 +101,7 @@ class Comic:
 		"""Returns an explain xkcd link for the comic."""
 		global explanationUrl
 		return explanationUrl + str(self.number)
-	
+
 	def show(self):
 		"""Uses the webbrowser module to open the comic"""
 		webbrowser.open_new_tab(self.link)
@@ -109,7 +109,7 @@ class Comic:
 	def download(self, output="", outputFile=""):
 		"""Download the image of the comic, returns the name of the output file"""
 		image = urllib.urlopen(self.imageLink).read()
-		
+
 		#Process optional input to work out where the dowload will go and what it'll be called
 		if output != "":
 			output = os.path.abspath(os.path.expanduser(output))
@@ -117,7 +117,7 @@ class Comic:
 			output = os.path.expanduser(os.path.join("~", "Downloads"))
 		if outputFile == "":
 			outputFile = "xkcd-" + str(self.number) + "-" + self.imageName
-			
+
 		output = os.path.join(output, outputFile)
 		try:
 			download = open(output, 'wb')
@@ -127,26 +127,26 @@ class Comic:
 		download.write(image)
 		download.close()
 		return output
-	
+
 def getLatestComicNum():
 	"""Function to return the number of the latest comic."""
 	xkcd = urllib.urlopen("http://xkcd.com/info.0.json").read()
 	xkcdJSON = json.loads(xkcd.decode())
 	number = xkcdJSON['num']
 	return number
-	
+
 def getLatestComic():
 	"""Function to return a Comic object for the latest comic number"""
 	number = getLatestComicNum()
 	return Comic(number)
-	
+
 def getRandomComic():
 	"""Function to return a Comic object for a random comic number"""
 	random.seed()
 	numComics = getLatestComicNum()
 	number = random.randint(1, numComics)
 	return Comic(number)
-	
+
 def getComic(number):
 	"""Function to return a Comic object for a given comic number"""
 	numComics = getLatestComicNum()
@@ -167,5 +167,5 @@ def convertToAscii(string, error="?"):
 			end = unicode.end
 			asciiString = asciiString[:start] + "?" + asciiString[end:]
 		else:
-			running = False		
+			running = False
 	return asciiString
