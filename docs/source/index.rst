@@ -13,8 +13,6 @@ Contents:
 
 .. automodule:: xkcd
    :members:
-.. autoclass:: xkcd.Comic
-   :members:
 
 Indices and tables
 ==================

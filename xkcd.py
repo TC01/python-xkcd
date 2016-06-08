@@ -366,7 +366,7 @@ def getComic(number, silent=True):
 def getWhatIfArchive():
 	"""	Parses the xkcd What If archive. getWhatIfArchive passes the HTML text of
 		the archive page into a :class:`WhatIfArchiveParser` and then calls
-		the parser's :func:`getWhatIfs` method and returns the dictionary produced.
+		the parser's :func:`WhatIfArchiveParser.getWhatIfs` method and returns the dictionary produced.
 
 		This function returns a dictionary mapping article numbers to :class:`WhatIf`
 		objects for every What If article published thus far. If the parsing fails,
