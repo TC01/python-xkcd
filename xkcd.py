@@ -101,7 +101,11 @@ class WhatIfArchiveParser(HTMLParser.HTMLParser):
 		if sys.version_info[0] <= 2:
 			HTMLParser.HTMLParser.__init__(self)
 		else:
-			super().__init__(convert_charrefs=False)
+			# Keep python 3.3 compatibility
+			if sys.version_info[1] <= 3:
+				super().__init__()
+			else:
+				super().__init__(convert_charrefs=False)
 
 		# Create a dictionary of what-ifs, indexed by number.
 		self.whatifs = {}
