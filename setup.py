@@ -104,4 +104,8 @@ setup(
 #			'calcpkg=calcrepo.calcpkg:main',
 #		],
 #	},
+
+	# Test suites.
+	test_suite = 'tests',
+
 	)
