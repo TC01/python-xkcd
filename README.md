@@ -1,4 +1,6 @@
-# xkcd v2.4.0 (development) - A Python interface to xkcd.com
+# xkcd v2.4.0 [![Build Status](https://travis-ci.org/TC01/python-xkcd.svg?branch=master)](https://travis-ci.org/TC01/python-xkcd)
+
+### A Python interface to xkcd.com
 
 By Ben Rosser, released under MIT License (see LICENSE for full text).
 
