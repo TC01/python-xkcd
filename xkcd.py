@@ -39,7 +39,6 @@ class WhatIf:
 
 	def __init__(self):
 		self.number = -1
-		self.imageLink = ''
 		self.title = ''
 		self.link = ''
 
