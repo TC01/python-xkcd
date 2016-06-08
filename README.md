@@ -1,6 +1,6 @@
 # xkcd v2.4.0 (development) - A Python interface to xkcd.com
 
-By Ben Rosser, released under MIT License (see LICENSE.txt)
+By Ben Rosser, released under MIT License (see LICENSE for full text).
 
 This is a Python library for accessing and retrieving links to comics from
 the xkcd webcomic by Randall Munroe. It is NOT endorsed or made by him, it's
