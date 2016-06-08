@@ -44,11 +44,11 @@ class WhatIf:
 
 	"""
 		Class representing an xkcd What If article.
-		
+
 		The WhatIf class is somewhat simpler than the :class:`Comic` class.
 		It simply provides functions for querying information about the link
 		to, title of, and index of a What If article.
-		
+
 		Unlike the :class:`Comic` class, you are not meant to construct them
 		directly. Instead, call :func:`getWhatIfArchive` to produce a dictionary
 		mapping numbers to WhatIf objects and then select the one(s) you are
@@ -87,11 +87,11 @@ class WhatIfArchiveParser(HTMLParser.HTMLParser):
 		HTML parser. It is invoked by :func:`getWhatIfArchive` to parse
 		the xkcd What If archive page, and automatically populate :class:`WhatIf`
 		objects
-		
+
 		As there is not a JSON API for the What If blog (or at least, the author
 		was unable to find one), this seemed the simplest way to implement fetching
 		of information about them.
-		
+
 		This class is designed for internal usage only; there should be no reason
 		for you to use it directly outside of the xkcd module.
 	"""
@@ -162,7 +162,7 @@ class WhatIfArchiveParser(HTMLParser.HTMLParser):
 		"""	Returns a dictionary of :class:`WhatIf` objects, indexed into by
 			their number. This function must be invoked after the HTML parsing has
 			finished, i.e. after calling self.feed.
-			
+
 			If for some reason the parsing has failed, the dictionary will be empty."""
 		return self.whatifs
 
@@ -172,7 +172,7 @@ class Comic:
 		ways; if you know the number of the comic you want to query, you can just
 		construct them yourself (e.g. Comic(integer)), but the recommended way is to
 		use the :func:`getComic` function.
-		
+
 		There are also helper functions available to get the latest comic (:func:`getLatestComic`)
 		and a random comic(:func:`getRandomComic`) as comic objects.
 	"""
@@ -183,7 +183,7 @@ class Comic:
 		if number <= 0:
 			self.link = "Invalid comic"
 			return
-		
+
 		"""	The link to the comic on the xkcd website."""
 		self.link = xkcdUrl + str(number)
 
@@ -218,13 +218,13 @@ class Comic:
 
 	def getAsciiTitle(self):
 		"""	Returns the ASCII-formatted version of the title.
-		
+
 		This function, and the other ASCII getters in the Comic class, exists so that
 		code which depends on some legacy Python 2 component, like Twisted (which as
 		of this writing does not support Unicode terribly well) can retrieve a version
 		of comic metadata that they can use. It uses the :func:`convertToAscii` helper
 		function to replace characters Python cannot automatically convert with a "?".
-		
+
 		You should do your best to not need to use this routine and prefer :func:`getTitle`
 		wherever possible.
 		"""
@@ -270,20 +270,20 @@ class Comic:
 
 	def download(self, output="", outputFile="", silent=True):
 		"""	Downloads the image of the comic onto your computer.
-		
+
 			Arguments:
 				output: the output directory where comics will be downloaded to. The
 				default argument for 'output is the empty string; if the empty
 				string is passed, it defaults to a "Downloads" directory in your home folder
 				(this directory will be created if it does not exist).
-				
+
 				outputFile: the filename that will be written. If the empty string
 				is passed, outputFile will default to a string of the form xkcd-(comic number)-(image filename),
 				so for example, xkcd-1691-optimization.png.
-				
+
 				silent: boolean, defaults to True. If set to False, an error will be printed
 				to standard output should the provided integer argument not be valid.
-				
+
 			Returns the path to the downloaded file, or an empty string in the event
 			of failure."""
 		image = urllib.urlopen(self.imageLink).read()
@@ -314,7 +314,7 @@ class Comic:
 
 def getLatestComicNum():
 	"""	Uses the xkcd JSON API to look up the number of the latest xkcd comic.
-	
+
 		Returns that number as an integer."""
 	xkcd = urllib.urlopen("http://xkcd.com/info.0.json").read()
 	xkcdJSON = json.loads(xkcd.decode())
@@ -325,7 +325,7 @@ def getLatestComic():
 	"""	Produces a :class:`Comic` object for the latest xkcd comic. This function
 		is just a wrapper around a call to :func:`getLatestComicNum`, and then
 		constructs a :class:`Comic` object on its return value.
-		
+
 		Returns the resulting comic object."""
 	number = getLatestComicNum()
 	return Comic(number)
@@ -334,7 +334,7 @@ def getRandomComic():
 	"""	Produces a :class:`Comic` object for a random xkcd comic. Uses the
 		Python standard library random number generator in order to select
 		a comic.
-		
+
 		Returns the resulting comic object."""
 	random.seed()
 	numComics = getLatestComicNum()
@@ -345,13 +345,13 @@ def getComic(number, silent=True):
 	"""	Produces a :class:`Comic` object with index equal to the provided argument.
 		Prints an error in the event of a failure (i.e. the number is less than zero
 		or greater than the latest comic number) and returns an empty Comic object.
-	
+
 		Arguments:
 			an integer, "number", that is the index of the comic in question.
-			
+
 			silent: boolean, defaults to True. If set to False, an error will be printed
 			to standard output should the provided integer argument not be valid.
-			
+
 		Returns the resulting Comic object for the provided index if successful,
 		or a Comic object with -1 as the index if not."""
 	numComics = getLatestComicNum()
@@ -367,7 +367,7 @@ def getWhatIfArchive():
 	"""	Parses the xkcd What If archive. getWhatIfArchive passes the HTML text of
 		the archive page into a :class:`WhatIfArchiveParser` and then calls
 		the parser's :func:`getWhatIfs` method and returns the dictionary produced.
-		
+
 		This function returns a dictionary mapping article numbers to :class:`WhatIf`
 		objects for every What If article published thus far. If the parsing fails,
 		for whatever reason, the dictionary will be empty."""
@@ -385,25 +385,25 @@ def getLatestWhatIfNum(archive=None):
 	"""	Returns an integer representing the number of the latest What If article
 		published. This is done by calling :class:`getLatestWhatIf` and returning
 		the number of that method's result.
-		
+
 		Takes an optional "archive" argument. If this argument is None, the
 		:func:`getWhatIfArchive` routine is first called to populate the archive
 		of published What If articles. If it is not, however, "archive" is assumed
 		to be a dictionary and used as the set of articles to chooose from.
 	"""
-	
+
 	latestWhatIf = getLatestWhatIf(archive)
 	return latestWhatIf.number
 
 def getLatestWhatIf(archive=None):
 	"""	Returns a :class:`WhatIf` object representing the latest What If article.
-		
+
 		Takes an optional "archive" argument. If this argument is None, the
 		:func:`getWhatIfArchive` routine is first called to populate the archive
 		of published What If articles. If it is not, however, "archive" is assumed
 		to be a dictionary and used as the set of articles to chooose from.
 	"""
-	
+
 	if archive is None:
 		archive = getWhatIfArchive()
 
@@ -419,7 +419,7 @@ def getRandomWhatIf():
 		from the dictionary produced by :func:`getWhatIfArchive`; like the other What If
 		routines, this function is called first in order to get a list of all previously
 		published What Ifs."""
-		
+
 	random.seed()
 	archive = getWhatIfArchive()
 	latest = getLatestWhatIfNum(archive)
@@ -431,15 +431,15 @@ def getWhatIf(number):
 		index passed to the function. If the index is less than zero or
 		greater than the maximum number of articles published thus far,
 		None is returned instead.
-		
+
 		Like all the routines for handling What If articles, :func:`getWhatIfArchive`
 		is called first in order to establish a list of all previously published
 		What Ifs.
-		
+
 		Arguments:
-		
+
 			number: an integer, this is the index of article to retrieve.
-			
+
 		Returns the resulting :class:`WhatIf` object."""
 	archive = getWhatIfArchive()
 	latest = getLatestWhatIfNum(archive)
@@ -455,16 +455,16 @@ def convertToAscii(string, error="?"):
 		libraries that expect ASCII strings, such as Twisted (as of this writing,
 		anyway). It is unlikely something you will need directly, and its
 		use is discouraged.
-		
+
 		Arguments:
-		
+
 			string: the string to attempt to convert.
-			
+
 			error: a string that will be substituted into 'string' wherever Python is unable
 			to automatically do the conversion.
-			
+
 		convertToAscii returns the converted string."""
-		
+
 	running = True
 	asciiString = string
 	while running:
