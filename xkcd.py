@@ -268,7 +268,7 @@ class Comic:
 			web browser."""
 		webbrowser.open_new_tab(self.link)
 
-	def download(self, output="", outputFile=""):
+	def download(self, output="", outputFile="", silent=True):
 		"""	Downloads the image of the comic onto your computer.
 		
 			Arguments:
@@ -280,6 +280,9 @@ class Comic:
 				outputFile: the filename that will be written. If the empty string
 				is passed, outputFile will default to a string of the form xkcd-(comic number)-(image filename),
 				so for example, xkcd-1691-optimization.png.
+				
+				silent: boolean, defaults to True. If set to False, an error will be printed
+				to standard output should the provided integer argument not be valid.
 				
 			Returns the path to the downloaded file, or an empty string in the event
 			of failure."""
@@ -300,7 +303,8 @@ class Comic:
 		try:
 			download = open(output, 'wb')
 		except:
-			print("Unable to make file " + output)
+			if not silent:
+				print("Unable to make file " + output)
 			return ""
 		download.write(image)
 		download.close()
@@ -337,7 +341,7 @@ def getRandomComic():
 	number = random.randint(1, numComics)
 	return Comic(number)
 
-def getComic(number):
+def getComic(number, silent=True):
 	"""	Produces a :class:`Comic` object with index equal to the provided argument.
 		Prints an error in the event of a failure (i.e. the number is less than zero
 		or greater than the latest comic number) and returns an empty Comic object.
@@ -345,11 +349,15 @@ def getComic(number):
 		Arguments:
 			an integer, "number", that is the index of the comic in question.
 			
+			silent: boolean, defaults to True. If set to False, an error will be printed
+			to standard output should the provided integer argument not be valid.
+			
 		Returns the resulting Comic object for the provided index if successful,
 		or a Comic object with -1 as the index if not."""
 	numComics = getLatestComicNum()
 	if number > numComics or number <= 0:
-		print("Error: You have requested an invalid comic.")
+		if not silent:
+			print("Error: You have requested an invalid comic.")
 		return Comic(-1)
 	return Comic(number)
 
