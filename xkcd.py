@@ -359,6 +359,9 @@ def getComic(number, silent=True):
 		Returns the resulting Comic object for the provided index if successful,
 		or a Comic object with -1 as the index if not."""
 	numComics = getLatestComicNum()
+	
+	if type(number) is str and number.isdigit():
+		number = int(number)
 	if number > numComics or number <= 0:
 		if not silent:
 			print("Error: You have requested an invalid comic.")
@@ -447,6 +450,9 @@ def getWhatIf(number):
 		Returns the resulting :class:`WhatIf` object."""
 	archive = getWhatIfArchive()
 	latest = getLatestWhatIfNum(archive)
+	
+	if type(number) is str and number.isdigit():
+		number = int(number)
 	if number > latest or latest <= 0:
 		return None
 	return archive[number]
