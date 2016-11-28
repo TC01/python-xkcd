@@ -183,6 +183,8 @@ class Comic:
 
 	def __init__(self, number):
 		global xkcdUrl, imageUrl
+		if type(number) is str and number.isdigit():
+			number = int(number)
 		self.number = number
 		if number <= 0:
 			self.link = "Invalid comic"
@@ -351,7 +353,7 @@ def getComic(number, silent=True):
 		or greater than the latest comic number) and returns an empty Comic object.
 
 		Arguments:
-			an integer, "number", that is the index of the comic in question.
+			an integer or string that represents a number, "number", that is the index of the comic in question.
 
 			silent: boolean, defaults to True. If set to False, an error will be printed
 			to standard output should the provided integer argument not be valid.
@@ -445,7 +447,7 @@ def getWhatIf(number):
 
 		Arguments:
 
-			number: an integer, this is the index of article to retrieve.
+			number: an integer or string that represents a number, this is the index of article to retrieve.
 
 		Returns the resulting :class:`WhatIf` object."""
 	archive = getWhatIfArchive()
