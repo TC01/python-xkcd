@@ -1,4 +1,4 @@
-# xkcd v2.4.0 [![Build Status](https://travis-ci.org/TC01/python-xkcd.svg?branch=master)](https://travis-ci.org/TC01/python-xkcd)
+# xkcd v2.4.1 [![Build Status](https://travis-ci.org/TC01/python-xkcd.svg?branch=master)](https://travis-ci.org/TC01/python-xkcd)
 
 ### A Python interface to xkcd.com
 
@@ -25,6 +25,10 @@ scraping the What If archive page with a HTML parser.
 Full API documentation is available [here](https://pythonhosted.org/xkcd/).
 
 ## Changelog:
+
+### Version 2.4.1:
+* Routines that take comic/article numbers (e.g. xkcd.getComic()) now also
+can take strings containing cardinal numbers.
 
 ### Version 2.4.0:
 * Added preliminary What If support; routines for querying basic data about
@@ -61,3 +65,7 @@ cannot be imported (and rST-formatted if it can).
 ## Credits:
 
 * Ben Rosser <rosser.bjr@gmail.com>: Developer
+
+Contributions from (github users, unless indicated otherwise):
+
+* @Kyu
