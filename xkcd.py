@@ -35,9 +35,9 @@ else:
 	import html.parser as HTMLParser
 
 # Define the URLs as globals.
-xkcdUrl = "http://www.xkcd.com/"			# The URL for xkcd.
-imageUrl = "http://imgs.xkcd.com/comics/"	# The root URL for image retrieval.
-explanationUrl = "http://explainxkcd.com/"	# The URL of the explanation.
+xkcdUrl = "https://www.xkcd.com/"			# The URL for xkcd.
+imageUrl = "https://imgs.xkcd.com/comics/"	# The root URL for image retrieval.
+explanationUrl = "https://explainxkcd.com/"	# The URL of the explanation.
 archiveUrl = "https://what-if.xkcd.com/archive/"	# The What If Archive URL.
 
 class WhatIf:
@@ -142,7 +142,7 @@ class WhatIfArchiveParser(HTMLParser.HTMLParser):
 					except:
 						num = -1
 					self.currentWhatIf.number = num
-					self.currentWhatIf.link = "http:" + link
+					self.currentWhatIf.link = "https:" + link
 
 	def handle_data(self, data):
 		# Some cruder parsing to pick out the data.
@@ -322,7 +322,7 @@ def getLatestComicNum():
 	"""	Uses the xkcd JSON API to look up the number of the latest xkcd comic.
 
 		Returns that number as an integer."""
-	xkcd = urllib.urlopen("http://xkcd.com/info.0.json").read()
+	xkcd = urllib.urlopen("https://xkcd.com/info.0.json").read()
 	xkcdJSON = json.loads(xkcd.decode())
 	number = xkcdJSON['num']
 	return number
