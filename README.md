@@ -1,4 +1,4 @@
-# xkcd v2.4.1 [![Build Status](https://travis-ci.org/TC01/python-xkcd.svg?branch=master)](https://travis-ci.org/TC01/python-xkcd)
+# xkcd v2.4.2 [![Build Status](https://travis-ci.org/TC01/python-xkcd.svg?branch=master)](https://travis-ci.org/TC01/python-xkcd)
 
 ### A Python interface to xkcd.com
 
@@ -25,6 +25,10 @@ scraping the What If archive page with a HTML parser.
 Full API documentation is available [here](https://pythonhosted.org/xkcd/).
 
 ## Changelog:
+
+### Version 2.4.2:
+
+* Switched to using HTTPS URLs for all xkcd queries.
 
 ### Version 2.4.1:
 * Routines that take comic/article numbers (e.g. xkcd.getComic()) now also
@@ -69,3 +73,4 @@ cannot be imported (and rST-formatted if it can).
 Contributions from (github users, unless indicated otherwise):
 
 * @Kyu
+* Tanya Sandoval (@tsando)
