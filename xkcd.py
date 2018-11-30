@@ -447,15 +447,15 @@ class Comic:
 		global explanationUrl
 		return explanationUrl + str(self.number)
 	
-	def getImageNumber(self):
-			""" Returns the Comic number."""
-			return self.imageNum
+	def getNumber(self):
+		""" Returns the Comic number."""
+		return self.imageNum
 
 	# Possible date formats:
 	# YMD: year, month, day
 	# DMY: day, month, year
 	# MDY: month, day, year
-	def getParsedDate(self, dateType="MDY"):
+	def getDate(self, dateType="MDY"):
 		""" Returns Comic date."""
 		if dateType == "MYD":
 			return "{}/{}/{}".format(self.month, self.year, self.day)
