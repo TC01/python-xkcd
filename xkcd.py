@@ -380,10 +380,10 @@ class Comic:
         self.year = xkcdData['year']
 
 		# This may no longer be necessary.
-#		if sys.version_info[0] >= 3:
-#			self.title = str(self.title, encoding='UTF-8')
-#			self.altText = str(self.altText, encoding='UTF-8')
-#			self.imageLink = str(self.imageLink, encoding='UTF-8')
+        # if sys.version_info[0] >= 3:
+        # self.title = str(self.title, encoding='UTF-8')
+        # self.altText = str(self.altText, encoding='UTF-8')
+        # self.imageLink = str(self.imageLink, encoding='UTF-8')
 
 		#Get the image filename
 		offset = len(imageUrl)
@@ -451,9 +451,20 @@ class Comic:
             """ Returns the Comic number."""
             return self.imageNum
 
-        def getParsedDate(self):
-            """ Returns Comic date."""
-            return self.date
+    # Possible date formats:
+    # YMD: year, month, day
+    # DMY: day, month, year
+    # MDY: month, day, year
+    def getParsedDate(self, dateType="MDY"):
+        """ Returns Comic date."""
+        if dateType == "MYD":
+            return "{}/{}/{}".format(self.month, self.year, self.day)
+        elif dateType == "DMY":
+            return "{}/{}/{}".format(self.day, self.month, self.year)
+        elif dateType == "MDY":
+            return "{}/{}/{}".format(self.month, self.day, self.year)
+        else:
+            return "{}/{}/{}".format(self.month, self.day, self.year)
 
 	def show(self):
 		"""	Uses the Python webbrowser module to open the comic in your system's
@@ -501,4 +512,3 @@ class Comic:
 		download.write(image)
 		download.close()
 		return output
-        
