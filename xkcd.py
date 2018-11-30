@@ -380,10 +380,10 @@ class Comic:
 		self.year = xkcdData['year']
 
 		# This may no longer be necessary.
-		# if sys.version_info[0] >= 3:
-		# self.title = str(self.title, encoding='UTF-8')
-		# self.altText = str(self.altText, encoding='UTF-8')
-		# self.imageLink = str(self.imageLink, encoding='UTF-8')
+#		if sys.version_info[0] >= 3:
+#			self.title = str(self.title, encoding='UTF-8')
+#			self.altText = str(self.altText, encoding='UTF-8')
+#			self.imageLink = str(self.imageLink, encoding='UTF-8')
 
 		#Get the image filename
 		offset = len(imageUrl)
