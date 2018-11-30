@@ -200,6 +200,10 @@ class Comic:
 		self.title = xkcdData['safe_title']
 		self.altText = xkcdData['alt']
 		self.imageLink = xkcdData['img']
+		self.imageNum = xkcdData['num']
+                self.day = xkcdData['day']
+                self.month = xkcdData['month']
+                self.year = xkcdData['year']
 
 		# This may no longer be necessary.
 #		if sys.version_info[0] >= 3:
@@ -268,6 +272,14 @@ class Comic:
 			a given comic and returns that URL."""
 		global explanationUrl
 		return explanationUrl + str(self.number)
+	
+	def getImageNumber(self):
+            """ Returns the Comic number."""
+            return self.imageNum
+
+        def getParsedDate(self):
+            """ Returns Comic date."""
+            return self.date
 
 	def show(self):
 		"""	Uses the Python webbrowser module to open the comic in your system's
