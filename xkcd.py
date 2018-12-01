@@ -372,6 +372,7 @@ class Comic:
 		jsonString = self.link + "/info.0.json"
 		xkcd = urllib.urlopen(jsonString).read()
 		xkcdData = json.loads(xkcd.decode())
+		self.json = urllib.urlopen(jsonString)
 		self.title = xkcdData['safe_title']
 		self.altText = xkcdData['alt']
 		self.imageLink = xkcdData['img']
@@ -457,6 +458,10 @@ class Comic:
 		rawDate = "{}/{}/{}".format(self.month, self.day, self.year)
 		date = datetime.datetime.strptime(rawDate, "%m/%d/%Y")
 		return date
+
+	def getRawJson(self):
+		""" Returns the raw json file from the xkcd api """
+		return self.json
 
 	def show(self):
 		"""	Uses the Python webbrowser module to open the comic in your system's
