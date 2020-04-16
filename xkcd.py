@@ -28,10 +28,12 @@ import webbrowser
 # Python 3 support!
 if sys.version_info[0] <= 2:
 	import urllib2 as urllib
+	from urlparse import urlparse
 	import HTMLParser
 else:
 	# This is kind of broken but I'm not sure of a better way.
 	import urllib.request as urllib
+	from urllib.parse import urlparse
 	import html.parser as HTMLParser
 
 # Define the URLs as globals.
@@ -201,6 +203,15 @@ class Comic:
 		self.altText = xkcdData['alt']
 		self.imageLink = xkcdData['img']
 
+		# Work out what the 2x url would be, if applicable
+		if number >= 1063:
+			parsed = urlparse(self.imageLink)
+			filename = parsed.path.split('.')[0] + "_2x"
+			extension = parsed.path.split('.')[1]
+			self.imageLinkx2 = parsed.scheme + "://" + parsed.netloc + filename + "." + extension
+		else:
+			self.imageLinkx2 = self.imageLink
+
 		# This may no longer be necessary.
 #		if sys.version_info[0] >= 3:
 #			self.title = str(self.title, encoding='UTF-8')
@@ -274,7 +285,7 @@ class Comic:
 			web browser."""
 		webbrowser.open_new_tab(self.link)
 
-	def download(self, output="", outputFile="", silent=True):
+	def download(self, output="", outputFile="", silent=True, x2=False):
 		"""	Downloads the image of the comic onto your computer.
 
 			Arguments:
@@ -290,9 +301,15 @@ class Comic:
 				silent: boolean, defaults to True. If set to False, an error will be printed
 				to standard output should the provided integer argument not be valid.
 
+				x2: boolean, defaults to False. If set to True, will attempt to download
+				the 2x scaled version of the comic.
+
 			Returns the path to the downloaded file, or an empty string in the event
 			of failure."""
-		image = urllib.urlopen(self.imageLink).read()
+		if x2:
+			image = urllib.urlopen(self.imageLinkx2).read()
+		else:
+			image = urllib.urlopen(self.imageLink).read()
 
 		#Process optional input to work out where the dowload will go and what it'll be called
 		if output != "":
