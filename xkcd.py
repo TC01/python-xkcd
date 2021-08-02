@@ -233,6 +233,10 @@ class Comic:
         """    Returns the title of the comic, as a UTF-8 formatted Unicode string."""
         return self.title
 
+    def getNumber(self):
+        """Returns the number of the comic as an integer"""
+        return self.number
+
     def getAsciiTitle(self):
         """    Returns the ASCII-formatted version of the title.
 
