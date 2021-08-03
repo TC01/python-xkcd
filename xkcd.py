@@ -237,6 +237,10 @@ class Comic:
         """Returns the number of the comic as an integer"""
         return self.number
 
+    def getLink(self):
+        """Returns the link to the comic as a string"""
+        return self.link
+
     def getAsciiTitle(self):
         """    Returns the ASCII-formatted version of the title.
 
