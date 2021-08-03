@@ -37,7 +37,7 @@ else:
     import html.parser as HTMLParser
 
 # Define the URLs as globals.
-xkcdUrl = "https://www.xkcd.com/"            # The URL for xkcd.
+xkcdUrl = "https://xkcd.com/"            # The URL for xkcd.
 imageUrl = "https://imgs.xkcd.com/comics/"    # The root URL for image retrieval.
 explanationUrl = "https://explainxkcd.com/"    # The URL of the explanation.
 archiveUrl = "https://what-if.xkcd.com/archive/"    # The What If Archive URL.
